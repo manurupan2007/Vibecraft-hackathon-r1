@@ -368,11 +368,11 @@ export default function App() {
       <header className="sticky top-0 z-40 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-xs">
         {/* Zone 1: Brand title, one line */}
         <div className="flex items-center gap-3">
-          <span className="text-xl font-black tracking-tight text-slate-900">
-            VIBECRAFT
+          <span className="text-lg font-black tracking-tight text-slate-900">
+            Attendance Predictor
           </span>
           <span className="text-slate-400 text-xs font-semibold tracking-tight hidden sm:inline">
-            / Student Attendance Intelligence
+            / Academic Management Portal
           </span>
         </div>
 

@@ -1,5 +1,5 @@
 {
-  "name": "VIBECRAFT · Mark Attendance",
+  "name": "Attendance Predictor",
   "description": "An advanced college attendance predictor, On-Duty (OD) simulator, and AI Advisor designed to help students stay safe from the 75% detention zone and reach 90%.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
