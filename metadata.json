@@ -1,6 +1,6 @@
 {
-  "name": "Attendance Predictor",
-  "description": "An advanced college attendance predictor, On-Duty (OD) simulator, and AI Advisor designed to help students stay safe from the 75% detention zone and reach 90%.",
+  "name": "CampusFlow",
+  "description": "A premium, unified academic portal integrating attendance forecasting, On-Duty leave simulations, and a live 3D room occupancy locator with AI search.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

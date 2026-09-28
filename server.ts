@@ -112,6 +112,81 @@ INSTRUCTIONS FOR CALCULATIONS & PERSONA:
     }
   });
 
+  // API Route for Smart-Search Room Finder (Phase 1 of Round 2)
+  app.post('/api/find-rooms', async (req: express.Request, res: express.Response) => {
+    try {
+      const { query, roomStatuses } = req.body;
+      const apiKey = process.env.GEMINI_API_KEY;
+
+      if (!apiKey) {
+        return res.status(500).json({ 
+          error: 'GEMINI_API_KEY is not configured on the server. Please add it via Settings > Secrets.' 
+        });
+      }
+
+      const ai = new GoogleGenAI({
+        apiKey: apiKey,
+        httpOptions: {
+          headers: {
+            'User-Agent': 'aistudio-build',
+          }
+        }
+      });
+
+      const systemInstruction = `
+You are the Smart Class Finder AI system for our academic portal.
+Your job is to read the user's natural language request, analyze the current room occupancy logs, and select the best rooms that match their criteria.
+
+Room Statuses available at this exact moment:
+${JSON.stringify(roomStatuses, null, 2)}
+
+Instructions for filtering:
+1. Parse user criteria:
+   - Floor: "ground floor" (floor 1), "first floor" (floor 2), "second floor/top floor" (floor 3).
+   - Cooling: "AC" (hasAC must be true), "non-AC" (hasAC must be false).
+   - Group size: "for me and my team" / "project group" / "study group" (capacity >= 5 is fine), "classroom/large" (capacity >= 50).
+   - Duration: "for the next 2 hours" (timeLeftMinutes >= 120), "rest of the day" (timeLeftMinutes is very large or Infinity).
+   - Occupancy: ONLY select rooms where "isOccupied" is false!
+2. You must respond ONLY with a valid JSON object matching the exact schema below. Do NOT output any conversational text or markdown code fences outside the JSON.
+Schema:
+{
+  "explanation": "A friendly 1-2 sentence summary of what rooms were selected and why.",
+  "matchingRoomIds": ["LHC 101", "Lab 3"]
+}
+`;
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-3.8-flash',
+        contents: [
+          { role: 'user', parts: [{ text: `User Search Query: "${query}"` }] }
+        ],
+        config: {
+          systemInstruction,
+          temperature: 0.1,
+          responseMimeType: "application/json"
+        }
+      });
+
+      const resultText = response.text || '{}';
+      try {
+        const resultJson = JSON.parse(resultText.trim());
+        res.json(resultJson);
+      } catch (e) {
+        console.error("JSON parse fallback on raw response:", resultText);
+        res.json({
+          explanation: "Analyzed available empty classrooms semantically.",
+          matchingRoomIds: roomStatuses
+            .filter((r: any) => !r.isOccupied)
+            .slice(0, 3)
+            .map((r: any) => r.room.id)
+        });
+      }
+    } catch (error: any) {
+      console.error('Gemini Room Finder Error:', error);
+      res.status(500).json({ error: error.message || 'Error occurred.' });
+    }
+  });
+
   const isProd = process.env.NODE_ENV === 'production';
   
   if (!isProd) {

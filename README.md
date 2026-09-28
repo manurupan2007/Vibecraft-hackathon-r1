@@ -1,70 +1,59 @@
-# Academic Attendance Predictor & Planner
+# CampusFlow · Academic Portal
 
-**Live Deployment**: [vibecraft-hackathon-r1-five.vercel.app](https://vibecraft-hackathon-r1-five.vercel.app/)
+**Live Deployment Link**: [vibecraft-hackathon-r1-five.vercel.app](https://vibecraft-hackathon-r1-five.vercel.app/)
 
-An advanced, enterprise-grade college attendance tracker, predictive modeling engine, and interactive simulation dashboard. This platform is designed specifically to help undergraduate students schedule future leaves, optimize **On-Duty (OD)** sanctions, and secure attendance above the mandatory 75% detention threshold.
+A premium, unified academic portal integrating attendance forecasting, On-Duty leave simulations, and a live 3D room occupancy locator with semantic AI search. This project successfully merges the requirements of both **Round 1 (Attendance Predictor)** and **Round 2 (Free Class Locator)** into a high-fidelity student workstation.
 
 ---
 
-## 📅 Semester Context
-* **Start Date**: August 29, 2026  
-* **End Date**: November 29, 2026  
-* **Tracked Cohorts**: 10 distinct, pre-registered academic sections (Section 1 to Section 10).
-* **Campus Holidays Excluded**: Labor Day, Fall Break, Veterans Day, Thanksgiving Break.
+## 🎨 Professional Themes System
+Students can dynamically switch the entire look-and-feel of the academic portal using the upper right theme indicators:
+* **Classic SaaS Light**: Clean off-white and slate corporate light design.
+* **Midnight Carbon Dark**: High-contrast dark carbon dashboard.
+* **Oxford Crimson Scholastic**: Harvard/Oxford-style crimson red and ivory.
+* **Stanford Forest Academic**: Stanford-style gold and dark forest green.
 
 ---
 
 ## 🚀 Key Features
 
-### 1. The Core Predictor & Calculator
-* **Section-Specific Calendars**: Auto-calculates scheduled classes and room logs for 10 engineering cohorts based on realistic timetables.
-* **Attendance Rate Forecasting**: Tracks exactly how many upcoming classes a student must attend to stay out of the **75% Detention Zone** or secure a **90% Honors Standing**.
-* **Irreversible Detention Alert**: Displays a high-contrast warning banner if it is mathematically impossible to reach the 75% threshold, prompting students to take immediate action.
+### 📅 Round 1: Attendance Tracker & Leave Simulator
+* **Interactive Sliders**: Drag percentages to update actual portal attendance up to today's simulated progress date.
+* **Detention Buffer Threshold (75%)**: Plots vertical target markers directly on subject progress tracks to forecast how many remaining sessions a student must attend to stay safe.
+* **Merit standing (90%)**: Dynamic progress markers indicating the threshold for academic honor lists.
+* **Detention Risk Alarm**: Displays a prominent, crimson warning banner if reaching 75% attendance is mathematically impossible.
+* **Leave/OD Simulator**: Multi-state 21-day timeline calendar to test absences, Excused Leaves (removes class from total), and On-Duty sanctions (counts as attended) on final percentages.
 
-### 2. Interactive Leave & OD Simulator
-* **Interactive 3-Week Matrix Grid**: Click on any upcoming class day in the calendar to dynamically toggle its state.
-* **Absence/Sick Leave**: Adds a simulated sick leave, registering missed sessions and recalculating final percentages.
-* **On-Duty (OD) Sanctions**: Grants automatic present credits, allowing students to preserve their GPA-advancing attendance metrics.
-* **Sanctioned/Excused Absences**: Excludes classes entirely from both the numerator and denominator, serving as a buffer.
-
-### 3. Academic Advisor Chat Desk
-* **Secure Server-Side AI**: Powered by the modern `@google/genai` SDK on an Express.js backend.
-* **Context-Grounding**: Feeds the real-time student configuration (percentages, class records, holidays, and active leaves) directly to Gemini for mathematically precise recommendations.
-* **Offline Fallback Handler**: Specifically guards against transient server spikes or rate-limiting (such as 503 unavailable codes), immediately serving local computed logs and manual tips.
+### 🏛️ Round 2: Free Class Locator (The Empty Room Finder)
+* **Interactive 3D Stacked Building Map**: A perspective-skewed isometric projection of the building (Ground Floor, 1F, and 2F). Rooms dynamically change color based on real-time schedule occupancy (Green for Empty, Red for Occupied).
+* **Live Countdown Availability Timers**: Clicking any room on the map reveals a real-time countdown timer showing exactly how much time is left before the next scheduled class is scheduled to begin.
+* **Traditional Floor Grid Manager**: Standard floor-by-floor list of detailed room specs.
+* **AI Room Finder (Semantic Text Bar)**: Process natural requests like *"I need an AC room on the ground floor for the next 2 hours"* using server-side Gemini AI in native JSON schema returns to instantly highlight matchings.
+* **"Call the Squad" Feature**: Instantly generates pre-formatted WhatsApp share links inviting project groups to occupied/free study classrooms.
 
 ---
 
-## 🎨 Professional UI/UX Details
-* **60-30-10 Professional Color Palette**: Structured with clean off-white canvases (`bg-slate-50`), crisp white cards (`bg-white`), thin razor borders (`border-slate-200`), and deep charcoal accents.
-* **Circular Progress Indicators**: Custom-rendered SVG gauges mapping subject ratios dynamically.
-* **Threshold Progress Tracks**: Horizontal bars that visually map where a student's current progress is relative to the critical **75% detention** and **90% honor** target lines.
-* **Tabular Typography**: Numbers and parameters formatted in monospace `font-mono tabular-nums` to ensure exact column alignment.
+## 🛠️ Local Development & Deployment
 
----
-
-## 🛠️ Installation & Local Development
-
-### 1. Install Dependencies
-Ensure you use the legacy peer dependency flag to bypass conflict resolutions:
+### 1. Install Project Packages
 ```bash
 npm install --legacy-peer-deps
 ```
 
-### 2. Setup API Secrets
-Configure your environment variables in a `.env` file in the root directory:
+### 2. Configure Environment variables
+Set up a `.env` file in your root workspace:
 ```env
-GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
+GEMINI_API_KEY="YOUR_KEY"
 PORT=3000
 ```
 
-### 3. Launch Development Server
-Launches the full-stack Node/Express server on Port 3000, mounting the Vite pipeline in middleware mode:
+### 3. Launch Development Instance
+Launches the full-stack Express server on Port 3000, serving the static index page and handling API requests securely:
 ```bash
 npm run dev
 ```
 
-### 4. Build for Production
-Compiles static assets and readies server containers:
+### 4. Build for Vercel/Production
 ```bash
 npm run build
 npm start
