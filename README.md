@@ -1,5 +1,7 @@
 # Academic Attendance Predictor & Planner
 
+**Live Deployment**: [vibecraft-hackathon-r1-five.vercel.app](https://vibecraft-hackathon-r1-five.vercel.app/)
+
 An advanced, enterprise-grade college attendance tracker, predictive modeling engine, and interactive simulation dashboard. This platform is designed specifically to help undergraduate students schedule future leaves, optimize **On-Duty (OD)** sanctions, and secure attendance above the mandatory 75% detention threshold.
 
 ---
